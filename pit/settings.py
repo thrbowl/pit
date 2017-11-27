@@ -1,0 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# PROEJCT
+
+DEBUG = True
+
+
+# EXTS
+
+# SQLALCHEMY
+SQLALCHEMY_TRACK_MODIFICATIONS = False
