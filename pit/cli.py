@@ -18,7 +18,7 @@ def make_shell_context():
 
 
 @manager.command
-def runserver(host='0.0.0.0', port=8360, workers=1):
+def runserver(host='0.0.0.0', port=6000, workers=1):
     """Run the app with Gunicorn."""
 
     if app.debug:

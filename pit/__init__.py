@@ -4,12 +4,13 @@ from werkzeug.utils import import_string
 
 from pit.ext import db
 from pit.exc import BaseError, UnknownError
+from pit.utils.app_mange import register_papp
 
-blueprints = [
+apps = [
     'pit.apps.shici',
 ]
 
-extensions = [
+exts = [
     'pit.ext.db',
 ]
 
@@ -18,13 +19,16 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object('pit.settings')
 
-    for ext in extensions:
-        extension = import_string(ext)
-        extension.init_app(app)
+    for ext in exts:
+        ext = import_string(ext)
+        ext.init_app(app)
 
-    # for blueprint in blueprints:
-    #     blueprint = import_string(blueprint)
-    #     app.register_blueprint(blueprint)
+    # for papp in apps:
+    #     papp = import_string(papp)
+    #     register_papp(papp, app=app, db=db)
+    from pit.apps.shici.models import db
+    from pit.apps.shici.views import bp
+    app.register_blueprint(bp)
 
     @app.before_first_request
     def create_database():
@@ -43,4 +47,15 @@ def create_app():
             'data': None
         })
 
+    @app.teardown_request
+    def teardown_request(exc):
+        if not db.session:
+            return
+        if exc:
+            db.session.rollback()
+        else:
+            db.session.commit()
+        db.session.remove()
+
+    print(app.url_map)
     return app

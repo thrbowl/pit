@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,minimal-ui"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script>(function (html) {
+        html.className = html.className.replace(/\bno-js\b/, 'js')
+    })(document.documentElement);</script>
+    <title>古诗词内容抓取资源站</title>
+    <link rel='stylesheet' id='puma-css' href='/static/css/bundle.css' type='text/css' media='screen'/>
+    <link rel='stylesheet' id='fancyratings-css' href='/static/css/style.css' type='text/css' media='all'/>
+    <script type='text/javascript' src='/static/js/jquery.js'></script>
+    <script type='text/javascript' src='/static/js/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='/static/js/index.js'></script>
+</head>
+<body class="home blog">
+<div class="surface-content">
+    <header class="site-header u-textAlignCenter container">
+        <div class="header-inner">
+            <h1 class="site-title">
+                <a href="." title="">古诗词内容抓取资源站</a>
+            </h1>
+            <p class="site-description">书山有路勤为径，学海无涯苦作舟。</p>
+            {#    <div class="social-links"> #}
+            {#        <span class="social-link"><a href="#" target="_blank"><span class="icon-rss"></span></a></span>#}
+            {#        <span class="social-link"><a href="javascript:;" class="opensearch"><span class="icon-search"></span></a></span>#}
+            {#    </div>#}
+            {#    <div class="">#}
+            {#      <form name="formsearch" role="search" method="get" class="search-form" action="/plus/search.php">#}
+            {#        <input type="hidden" name="kwtype" value="0" />#}
+            {#        <label> <span class="screen-reader-text">搜索：</span>#}
+            {#          <input type="search" class="search-field" placeholder="搜索&hellip;" value="" name="q" id"q"/>#}
+            {#        </label>#}
+            {#        <input type="submit" class="search-submit" value="搜索" />#}
+            {#      </form>#}
+            {#    </div>#}
+        </div>
+    </header>
+{#    <nav class="topNav u-textAlignCenter container">#}
+{#        <div class="layoutSingleColumn">#}
+{#            <ul id="menu-%e9%a1%b6%e9%83%a8%e5%af%bc%e8%88%aa" class="topNav-items">#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a#}
+{#                        href="/a/meinv/">逛逛</a></li>#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a href="/a/toutiao/">头条</a>#}
+{#                </li>#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a#}
+{#                        href="/a/qiwen/">奇闻</a></li>#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a#}
+{#                        href="/a/yule/">娱乐</a></li>#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a#}
+{#                        href="/a/keji/">科技</a></li>#}
+{##}
+{#                <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item"><a href="/a/guanyu/">关于</a>#}
+{#                </li>#}
+{##}
+{#            </ul>#}
+{#        </div>#}
+{#    </nav>#}
+
+    <main class="main-content container">
+        <section class="blockGroup">
+            {% for r in results %}
+                <article class="block block--inset block--list">
+                    <h2 class="block-title post-featured" itemprop="headline">
+                        <a href="#">{{ r.title }}</a>
+                    </h2>
+                    <div class="block-postMetaWrap u-textAlignCenter">
+                        <div>{{ r.dynasty }} • {{ r.author }}</div>
+                        {#                        <time>录入时间：{{ r.add_time }}</time>#}
+                    </div>
+                    <div class="block-snippet block-snippet--subtitle grap" itemprop="about">
+                        {{ r.content|safe }}
+                        <p>&nbsp;</p>
+                        {#                        <p><a href="/a/qiwen/20170622/53.html" class="more-link">Read More.</a></p>#}
+                    </div>
+                    <div class="block-footer"><a href="#" rel="category tag">{{ r.tags }}</a>.
+                        {#                        <div class="block-footer-inner"> 0 喜欢 . 0 浏览 .</div>#}
+                        <div class="block-footer-inner">
+                            <time>录入时间：{{ r.add_time }}</time>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+        <div class="u-textAlignCenter postsFooterNav">
+            <div class="posts-nav">
+                {% for page in pager.iter_pages(left_edge=0, left_current=4, right_current=4, right_edge=0) %}
+                    {% if page %}
+                    {% if page != pager.page %}
+                        <a href="?page={{ page }}" class="page-numbers">{{ page }}</a>
+                    {% else %}
+                        <span class="page-numbers current">{{ page }}</span>
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer u-textAlignCenter container">
+        Copyright &copy; 2016-2017 兔巴兔科技有限公司 版权所有 <br/>
+        <a href="http://www.miitbeian.gov.cn/" target="_blank">备案号：京ICP备14006485号</a>
+    </footer>
+</div>
+<div class="back-to-top u-hide" onclick="backToTop();"><span class="icon-circle-up"></span></div>
+<div class="u-hide"></div>
+<script type='text/javascript' src='/static/js/bundle.js'></script>
+<script type='text/javascript' src='/static/js/wp-embed.min.js'></script>
+</body>
+</html>
